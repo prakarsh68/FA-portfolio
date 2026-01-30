@@ -1,11 +1,19 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Expertise from "./components/Expertise";
+import Quote from "./components/Quote";
+import Stats from "./components/Stats";
+
 function App() {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <h1 className="text-red-600 text-6xl font-bold">
-        TAILWIND WORKS
-      </h1>
-    </div>
-  )
+    <>
+      <Navbar />
+      <Hero />
+      <Expertise />
+      <Quote />
+      <Stats />
+    </>
+  );
 }
 
-export default App
+export default App;
