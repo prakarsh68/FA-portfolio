@@ -19,34 +19,26 @@ import Stats from "./components/Stats";
 
 function App() {
   return (
-    <>
+    <div className="bg-base-light dark:bg-base-dark text-text-light dark:text-text-dark transition-colors duration-300">
       <Navbar />
-
-      {/* HERO & INTRO */}
       <Hero />
       <AboutMe />
       <CareerObjective />
-
-      {/* ACADEMIC CORE */}
       <Expertise />
       <Education />
+      <Quote />
+      <Stats />
       <Experience />
-
-      {/* PROFESSIONAL HIGHLIGHTS */}
       <AcademicProjects />
       <SpecialAchievements />
       <Publications />
+      <WorldRecordsAndAwards />
+      <EventLeadershipAndSocialService />
       <AuthorshipPatentAwards />
       <AcademicEngagements />
       <SkillsInternship />
-
-      {/* CLOSING SECTIONS */}
-      <EventLeadershipAndSocialService />
-      <WorldRecordsAndAwards />
       <Contact />
-      <Quote />
-      <Stats />
-    </>
+    </div>
   );
 }
 

@@ -1,73 +1,124 @@
+import { GraduationCap, Code, Lightbulb, Users } from "lucide-react";
+
 const AboutMe = () => {
+  // Data for the right-side cards
+  const highlights = [
+    {
+      icon: <GraduationCap className="w-6 h-6" />,
+      title: "Academic Focus",
+      description: "Computer Science, Embedded Systems, Cloud Computing, Industry 4.0",
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Professional Role",
+      description: "Assistant Professor, Researcher, and Academic Mentor.",
+    },
+    {
+      icon: <Lightbulb className="w-6 h-6" />,
+      title: "Research Philosophy",
+      description: "Translating theoretical knowledge into impactful, real-world solutions.",
+    },
+  ];
+
+  // Data for the stats row
+  const stats = [
+    { label: "Years Experience", value: "06+" },
+    { label: "Research Areas", value: "04" },
+    { label: "Projects Guided", value: "20+" }, // Example value
+  ];
+
   return (
     <section
       id="about"
-      className="bg-[#f2efe9] py-36 px-6"
+      className="relative py-24 md:py-32 overflow-hidden bg-surface-light dark:bg-surface-dark transition-colors duration-300"
     >
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
+      <div className="container px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          
+          {/* --- LEFT COLUMN: Biography --- */}
+          <div className="space-y-8">
+            
+            {/* Section Header */}
+            <div className="space-y-6">
+              <h2 className="font-serif text-4xl md:text-5xl text-text-light dark:text-text-dark">
+                About Me
+              </h2>
+              <div className="w-20 h-[2px] bg-accent"></div>
+            </div>
 
-        {/* LEFT: TEXT */}
-        <div>
-          <h2 className="font-serif text-4xl mb-10">
-            About Me
-          </h2>
+            {/* Bio Text */}
+            <div className="space-y-6 text-lg text-muted-light dark:text-muted-dark leading-relaxed font-light">
+              <p>
+                I am an academician and researcher with over <strong className="text-text-light dark:text-text-dark font-medium">six years of experience</strong> in higher education, 
+                specializing in Computer Science and Engineering. My academic journey is shaped by a strong 
+                commitment to teaching, applied research, and the development of technology-driven solutions.
+              </p>
 
-          <span className="block w-16 h-[1px] bg-[#8b6b3d] mb-10" />
+              <p>
+                My research interests include <span className="text-accent">Embedded Systems</span>, <span className="text-accent">Cloud Computing</span>, and <span className="text-accent">Applied Machine Learning</span>. 
+                I actively engage in mentoring students, supervising academic projects, and contributing to 
+                peer-reviewed research that emphasizes innovation, reliability, and societal impact.
+              </p>
 
-          <p className="text-[#6b645c] leading-relaxed text-lg mb-7">
-            I am an academician and researcher with over six years of experience
-            in higher education, specializing in Computer Science and Engineering.
-            My academic journey is shaped by a strong commitment to teaching,
-            applied research, and the development of technology-driven solutions
-            that address real-world challenges.
-          </p>
+              <p>
+                As an educator, I strive to foster analytical thinking, interdisciplinary learning, and 
+                ethical responsibility, while continually evolving as a researcher.
+              </p>
+            </div>
 
-          <p className="text-[#6b645c] leading-relaxed text-lg mb-7">
-            My research interests include embedded systems, cloud computing,
-            Industry 4.0 technologies, and applied machine learning. I actively
-            engage in mentoring students, supervising academic projects, and
-            contributing to peer-reviewed research that emphasizes innovation,
-            reliability, and societal impact.
-          </p>
+            {/* Quick Stats Row */}
+            <div className="pt-8 grid grid-cols-3 gap-6 border-t border-border-light dark:border-border-dark">
+              {stats.map((stat, index) => (
+                <div key={index} className="space-y-1">
+                  <h4 className="text-3xl font-serif text-accent">{stat.value}</h4>
+                  <p className="text-xs tracking-widest uppercase text-muted-light dark:text-muted-dark">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <p className="text-[#6b645c] leading-relaxed text-lg">
-            As an educator, I strive to foster analytical thinking,
-            interdisciplinary learning, and ethical responsibility, while
-            continually evolving as a researcher and academic professional.
-          </p>
+          {/* --- RIGHT COLUMN: Highlights Cards --- */}
+          <div className="flex flex-col gap-6 pt-8 lg:pt-0">
+            {highlights.map((item, index) => (
+              <div
+                key={index}
+                className="group relative p-8 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark hover:border-accent/50 transition-all duration-300 hover:-translate-y-1"
+              >
+                {/* Decorative corner accent */}
+                <div className="absolute top-0 right-0 w-0 h-0 border-t-[30px] border-r-[30px] border-t-transparent border-r-transparent group-hover:border-r-accent transition-all duration-300"></div>
+
+                <div className="flex items-start gap-6">
+                  {/* Icon Box */}
+                  <div className="shrink-0 p-3 bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark text-accent rounded-sm group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                    {item.icon}
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="space-y-2">
+                    <h3 className="font-serif text-xl text-text-light dark:text-text-dark group-hover:text-accent transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-muted-light dark:text-muted-dark">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Resume Download Box (Optional addition for utility) */}
+            <div className="mt-4 p-6 bg-accent/10 border border-accent/20 flex items-center justify-between group cursor-pointer hover:bg-accent/20 transition-colors">
+              <div>
+                <h4 className="text-accent font-serif text-lg">Curriculum Vitae</h4>
+                <p className="text-xs text-muted-light dark:text-muted-dark uppercase tracking-wider">View full credentials</p>
+              </div>
+              <Code className="text-accent opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300" />
+            </div>
+          </div>
+
         </div>
-
-        {/* RIGHT: HIGHLIGHTS */}
-        <div className="space-y-12">
-          <div className="border-l-2 border-[#8b6b3d] pl-8">
-            <h3 className="font-serif text-xl mb-3">
-              Academic Focus
-            </h3>
-            <p className="text-[#6b645c] leading-relaxed">
-              Computer Science · Embedded Systems · Cloud Computing · Industry 4.0
-            </p>
-          </div>
-
-          <div className="border-l-2 border-[#8b6b3d] pl-8">
-            <h3 className="font-serif text-xl mb-3">
-              Professional Role
-            </h3>
-            <p className="text-[#6b645c] leading-relaxed">
-              Assistant Professor · Researcher · Academic Mentor
-            </p>
-          </div>
-
-          <div className="border-l-2 border-[#8b6b3d] pl-8">
-            <h3 className="font-serif text-xl mb-3">
-              Research Philosophy
-            </h3>
-            <p className="text-[#6b645c] leading-relaxed">
-              Translating theoretical knowledge into impactful, real-world
-              solutions through research and innovation.
-            </p>
-          </div>
-        </div>
-
       </div>
     </section>
   );

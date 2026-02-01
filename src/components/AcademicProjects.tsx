@@ -1,106 +1,128 @@
+import { Ambulance, Ship, Radio, Calendar, Users, Cpu } from "lucide-react";
+
 const AcademicProjects = () => {
+  // Data array for easy management
+  const projects = [
+    {
+      id: 1,
+      title: "Auto Rescue System",
+      icon: <Ambulance size={28} />,
+      period: "Mar 2014 – Feb 2016",
+      team: "Individual Project",
+      role: "Developer",
+      tech: ["Embedded Systems", "Cloud Integration", "GPS/GSM"],
+      desc: "In critical road accident scenarios, victims often depend on manual intervention by bystanders. This automated emergency response mechanism detects accident events and instantly transmits precise location data to ambulance services via cloud communication, significantly reducing response time."
+    },
+    {
+      id: 2,
+      title: "Trawler Ocean Care System",
+      icon: <Ship size={28} />,
+      period: "Mar 2016 – Jun 2017",
+      team: "Individual Project",
+      role: "Developer",
+      tech: ["Embedded Systems", "Geo-Fencing", "Safety Alerts"],
+      desc: "Addresses the increasing incidence of inadvertent international maritime border crossings by fishermen. This embedded safety solution provides real-time alerts when vessels approach restricted maritime boundaries, enhancing situational awareness and preventing legal and safety hazards."
+    },
+    {
+      id: 3,
+      title: "Panic Button System",
+      icon: <Radio size={28} />,
+      period: "Jun 2017",
+      team: "Team Size: 2",
+      role: "Developer",
+      tech: ["Cloud Communication", "Satellite Tracking", "IoT"],
+      desc: "Designed to assist elderly individuals during emergencies. Upon activation, the device captures real-time latitude and longitude data via satellite and transmits it to a centralized platform. The system alerts nearby hospitals and neighbors, enabling rapid intervention."
+    }
+  ];
+
   return (
     <section
       id="projects"
-      className="bg-[#f7f4ef] py-44 px-6"
+      className="bg-base-light dark:bg-base-dark py-24 md:py-32 transition-colors duration-300"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="container px-6 mx-auto">
 
-        {/* SECTION HEADER */}
-        <div className="text-center mb-36">
-          <h2 className="font-serif text-5xl mb-8">
+        {/* --- SECTION HEADER --- */}
+        <div className="text-center mb-24 space-y-4">
+          <h2 className="font-serif text-3xl md:text-5xl text-text-light dark:text-text-dark">
             Academic & Applied Projects
           </h2>
-          <p className="max-w-2xl mx-auto text-[#6b645c] text-lg leading-relaxed">
+          <div className="w-16 h-[2px] bg-accent mx-auto"></div>
+          <p className="max-w-2xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
             Selected projects demonstrating applied research, real-world problem
-            solving, and the integration of embedded systems and cloud-based
-            technologies with strong societal relevance.
+            solving, and the integration of embedded systems with strong societal relevance.
           </p>
         </div>
 
-        <div className="space-y-36">
+        {/* --- PROJECTS GRID --- */}
+        <div className="space-y-16 max-w-5xl mx-auto">
+          {projects.map((project) => (
+            <div 
+              key={project.id} 
+              className="group relative grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-12 p-8 md:p-10 rounded-sm border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark hover:shadow-xl hover:border-accent/30 transition-all duration-500 hover:-translate-y-1"
+            >
+              
+              {/* Decorative Accent Line */}
+              <div className="absolute left-0 top-10 bottom-10 w-[2px] bg-accent/20 group-hover:bg-accent transition-colors duration-500 hidden md:block"></div>
 
-          {/* PROJECT 1 */}
-          <div className="relative pl-10">
-            <span className="absolute left-0 top-3 w-[2px] h-28 bg-[#8b6b3d]" />
+              {/* --- LEFT: Metadata --- */}
+              <div className="space-y-6">
+                
+                {/* Icon & Title Group */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-base-light dark:bg-base-dark rounded-full text-accent border border-border-light dark:border-border-dark group-hover:text-white group-hover:bg-accent transition-colors duration-300">
+                    {project.icon}
+                  </div>
+                  <h3 className="md:hidden font-serif text-2xl text-text-light dark:text-text-dark">
+                    {project.title}
+                  </h3>
+                </div>
 
-            <h3 className="font-serif text-3xl mb-7">
-              Auto Rescue System
-            </h3>
+                {/* Info Tags */}
+                <div className="space-y-3 text-sm text-muted-light dark:text-muted-dark">
+                  <div className="flex items-center gap-3">
+                    <Calendar size={16} className="text-accent" />
+                    <span className="font-medium">{project.period}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Users size={16} className="text-accent" />
+                    <span>{project.team}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Cpu size={16} className="text-accent" />
+                    <span>{project.role}</span>
+                  </div>
+                </div>
 
-            <div className="flex flex-wrap gap-x-12 gap-y-3 text-xs tracking-widest uppercase text-[#8b6b3d] mb-9">
-              <span>Mar 2014 – Feb 2016</span>
-              <span>Individual Project</span>
-              <span>Role: Developer</span>
-              <span>Embedded · Cloud</span>
+                {/* Tech Stack Chips */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {project.tech.map((t, idx) => (
+                    <span key={idx} className="px-2 py-1 text-[10px] uppercase tracking-wider font-bold bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded text-muted-light dark:text-muted-dark group-hover:border-accent/50 transition-colors">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* --- RIGHT: Description --- */}
+              <div className="space-y-4">
+                <h3 className="hidden md:block font-serif text-3xl text-text-light dark:text-text-dark group-hover:text-accent transition-colors duration-300">
+                  {project.title}
+                </h3>
+                
+                <p className="text-muted-light dark:text-muted-dark leading-relaxed text-lg font-light">
+                  {project.desc}
+                </p>
+
+                {/* Interactive 'Read More' line (Purely visual) */}
+                <div className="pt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-x-[-10px] group-hover:translate-x-0">
+                  <span className="h-[1px] w-12 bg-accent"></span>
+                  <span className="text-xs uppercase tracking-widest text-accent font-bold">Project Details</span>
+                </div>
+              </div>
+
             </div>
-
-            <p className="text-[#6b645c] leading-relaxed text-lg max-w-4xl">
-              In critical road accident scenarios, victims often depend on manual
-              intervention by bystanders to contact emergency services, resulting
-              in life-threatening delays—particularly in isolated locations or
-              during late hours. The Auto Rescue System was developed as an
-              automated emergency response mechanism capable of detecting accident
-              events and instantly transmitting precise location data to
-              ambulance services via cloud communication. The system significantly
-              reduces response time and enhances the likelihood of saving human
-              lives.
-            </p>
-          </div>
-
-          {/* PROJECT 2 */}
-          <div className="relative pl-10">
-            <span className="absolute left-0 top-3 w-[2px] h-28 bg-[#8b6b3d]" />
-
-            <h3 className="font-serif text-3xl mb-7">
-              Trawler Ocean Care System
-            </h3>
-
-            <div className="flex flex-wrap gap-x-12 gap-y-3 text-xs tracking-widest uppercase text-[#8b6b3d] mb-9">
-              <span>Mar 2016 – Jun 2017</span>
-              <span>Individual Project</span>
-              <span>Role: Developer</span>
-              <span>Embedded Systems</span>
-            </div>
-
-            <p className="text-[#6b645c] leading-relaxed text-lg max-w-4xl">
-              The increasing incidence of inadvertent international maritime
-              border crossings by fishermen presents serious safety, legal, and
-              livelihood challenges. The Trawler Ocean Care System was proposed
-              as an embedded safety solution that provides real-time alerts when
-              vessels approach restricted maritime boundaries. By enhancing
-              situational awareness and navigational safety, the system helps
-              prevent unintentional border violations and supports safer fishing
-              operations.
-            </p>
-          </div>
-
-          {/* PROJECT 3 */}
-          <div className="relative pl-10">
-            <span className="absolute left-0 top-3 w-[2px] h-28 bg-[#8b6b3d]" />
-
-            <h3 className="font-serif text-3xl mb-7">
-              Panic Button System
-            </h3>
-
-            <div className="flex flex-wrap gap-x-12 gap-y-3 text-xs tracking-widest uppercase text-[#8b6b3d] mb-9">
-              <span>Jun 2017</span>
-              <span>Team Size: 2</span>
-              <span>Role: Developer</span>
-              <span>Cloud Communication</span>
-            </div>
-
-            <p className="text-[#6b645c] leading-relaxed text-lg max-w-4xl">
-              Designed to assist elderly individuals during emergency situations,
-              the Panic Button System enables instant distress signaling through
-              cloud-based communication. Upon activation, the device captures
-              real-time latitude and longitude data via satellite and transmits
-              the information to a centralized platform. The system promptly
-              alerts nearby hospitals and neighbors, enabling rapid response and
-              timely intervention during critical situations.
-            </p>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>

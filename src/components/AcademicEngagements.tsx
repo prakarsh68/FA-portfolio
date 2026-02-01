@@ -1,120 +1,159 @@
+import { Award, Mic, Cpu, Users, BookOpen, GraduationCap, Lightbulb, CheckCircle } from "lucide-react";
+
 const AcademicEngagements = () => {
+  
+  // Data Structure for cleaner rendering
+  const sections = [
+    {
+      id: "achievements",
+      title: "Key Achievements",
+      icon: <Award size={24} />,
+      items: [
+        "Launched 'Auto Rescue System' (108 Device) as a product by Sathyabama University.",
+        "Recipient of the Best Project Award from Sathyabama University.",
+        "Performed for All India Radio broadcast: “An Emergency Calling Device for 108”.",
+        "Honored by Rev. Dr. Jerome Dhas SOB, Bishop of Kuzhithurai, for innovation.",
+        "Convenor: “Computing Technologies in Space Exploration” (Feb 2025) with Dr. Srimathy Kesan.",
+        "Coordinated Project Expo 2K18 at Vel Tech Rangarajan Dr. Sagunthala R&D Institute."
+      ]
+    },
+    {
+      id: "resource",
+      title: "Resource Person & Reviewer",
+      icon: <Mic size={24} />,
+      items: [
+        "Reviewer: Smart India Hackathon (SIH) – Dept of AI & Data Science (Sep 2024).",
+        "Resource Person: “Navigating the Start-ups Ecosystem” — Udaya School of Eng. (Oct 2024).",
+        "Speaker on Innovation & Start-ups: St. Xavier’s Catholic College of Engineering (Oct 2024)."
+      ]
+    },
+    {
+      id: "certifications",
+      title: "Online Certifications",
+      icon: <Cpu size={24} />,
+      items: [
+        "Neural Networks and Deep Learning — University of Michigan (Coursera).",
+        "Structuring Machine Learning Projects — University of Michigan (Coursera).",
+        "Programming for Everybody (Python) — University of Michigan (Coursera)."
+      ]
+    },
+    {
+      id: "memberships",
+      title: "Professional Memberships",
+      icon: <Users size={24} />,
+      items: [
+        "AICTE–MIC Innovation Ambassador (Expert: Entrepreneurship Dev) — ID: IC201810082.",
+        "Student Member: Society for Engineering Education Enrichment (SEEE) — ID: IND TN 9999 9999 9256."
+      ]
+    },
+    {
+      id: "workshops",
+      title: "Workshops & Training",
+      icon: <BookOpen size={24} />,
+      items: [
+        "Pedagogical Practices & Tools for Effective Teaching — IEEE Computer Society (2024).",
+        "Faculty Immersive Workshop on Experiential Learning — SRMIST (2024).",
+        "International Webinar on “E-Business and Cyber Security” (2020).",
+        "Cyber Security Expert Workshop — Sathyabama University.",
+        "Remote Sensing Technology and Applications — ICTACT & Vel Tech."
+      ]
+    },
+    {
+      id: "faculty",
+      title: "Faculty Induction",
+      icon: <GraduationCap size={24} />,
+      items: [
+        "Innovation Ambassador (AI) Advanced Level Training — AICTE (2021–22).",
+        "Faculty Induction Program 2018 — IIITDM Kancheepuram.",
+        "National Level Workshop on SDG-4 (Quality Education) in HEIs under NEP."
+      ]
+    }
+  ];
+
   return (
     <section
       id="academic-engagements"
-      className="bg-[#f7f4ef] py-40 px-6"
+      className="bg-base-light dark:bg-base-dark py-24 md:py-32 transition-colors duration-300"
     >
-      <div className="max-w-6xl mx-auto space-y-36">
-
-        {/* HEADER */}
-        <div className="text-center">
-          <h2 className="font-serif text-5xl mb-8">
-            Academic Achievements & Engagements
+      <div className="container px-6 mx-auto">
+        
+        {/* --- HEADER --- */}
+        <div className="text-center mb-20 space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold tracking-widest uppercase mb-2">
+            <Lightbulb size={14} />
+            Continuous Development
+          </div>
+          <h2 className="font-serif text-3xl md:text-5xl text-text-light dark:text-text-dark">
+            Academic Engagements
           </h2>
-          <p className="max-w-3xl mx-auto text-[#6b645c] text-lg leading-relaxed">
-            Academic achievements, professional service, training programs,
-            and continuous development activities reflecting sustained
-            contributions to teaching, innovation, and institutional growth.
+          <div className="w-16 h-[2px] bg-accent mx-auto"></div>
+          <p className="max-w-3xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
+            A portfolio of professional service, continuous learning, and contributions 
+            to the academic community through teaching, innovation, and leadership.
           </p>
         </div>
 
-        {/* ACADEMIC ACHIEVEMENTS */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Academic Achievements
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>An Emergency Calling Device for 108 (Auto Rescue System) launched as a product by Sathyabama University.</li>
-            <li>Recipient of the Best Project Award from Sathyabama University.</li>
-            <li>Invited by All India Radio as a performer for the broadcast titled “An Emergency Calling Device for 108”.</li>
-            <li>Honored by Rev. Dr. Jerome Dhas SOB, Bishop of Kuzhithurai, for innovation.</li>
-            <li>Coordinated Project Expo 2K18 at Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology.</li>
-            <li>Organized a Guest Lecture on “Innovation and Entrepreneurship” by Mrs. Masha Nazeem, Founder & CEO, Masha Innovation Centre.</li>
-            <li>Organized a two-day IEEE & AICTE sponsored International Conference on Electronics Systems and Intelligent Computing at Vel Tech.</li>
-            <li>Convenor of the event “Computing Technologies in Space Exploration and Innovation” (17 Feb 2025) with Dr. Srimathy Kesan, Founder & CEO, Space Kidz India.</li>
-          </ul>
-        </div>
+        {/* --- MASONRY GRID LAYOUT --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          
+          {sections.map((section) => (
+            <div 
+              key={section.id}
+              className="group p-8 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-sm hover:shadow-xl hover:border-accent/30 hover:-translate-y-1 transition-all duration-300"
+            >
+              {/* Card Header */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-base-light dark:bg-base-dark text-accent rounded-full border border-border-light dark:border-border-dark group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                  {section.icon}
+                </div>
+                <h3 className="font-serif text-xl text-text-light dark:text-text-dark group-hover:text-accent transition-colors">
+                  {section.title}
+                </h3>
+              </div>
 
-        {/* RESOURCE PERSON */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Resource Person & Reviewer Roles
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>Reviewer, Smart India Hackathon (SIH) – Department of AI & Data Science (Sep 6, 2024).</li>
-            <li>Resource Person on “Navigating the Start-ups Ecosystem: From Idea to Innovation” — Udaya School of Engineering (Oct 18, 2024).</li>
-            <li>Resource Person on innovation and start-ups for the Department of Computer Science & Engineering, St. Xavier’s Catholic College of Engineering (Oct 2024).</li>
-          </ul>
-        </div>
+              {/* List Items */}
+              <ul className="space-y-4">
+                {section.items.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-sm text-muted-light dark:text-muted-dark leading-relaxed">
+                    <CheckCircle size={16} className="shrink-0 mt-1 text-accent/50 group-hover:text-accent transition-colors" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-        {/* ONLINE COURSES */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Online Certifications
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>Programming for Everybody (Getting Started with Python) — University of Michigan (Coursera).</li>
-            <li>Structuring Machine Learning Projects — University of Michigan (Coursera).</li>
-            <li>Neural Networks and Deep Learning — University of Michigan (Coursera).</li>
-          </ul>
-        </div>
+          {/* --- SKILLS CARD (Span 1 or 2 cols depending on layout) --- */}
+          <div className="group p-8 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-sm hover:shadow-xl hover:border-accent/30 hover:-translate-y-1 transition-all duration-300 md:col-span-2 lg:col-span-1">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-base-light dark:bg-base-dark text-accent rounded-full border border-border-light dark:border-border-dark group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                <Lightbulb size={24} />
+              </div>
+              <h3 className="font-serif text-xl text-text-light dark:text-text-dark group-hover:text-accent transition-colors">
+                Soft Skills
+              </h3>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {[
+                "Public Speaking", 
+                "Time Management", 
+                "Self-Motivation", 
+                "Interpersonal Communication", 
+                "Record Keeping", 
+                "Leadership"
+              ].map((skill) => (
+                <span 
+                  key={skill}
+                  className="px-3 py-1 bg-base-light dark:bg-base-dark text-xs font-bold uppercase tracking-wider text-muted-light dark:text-muted-dark rounded-full border border-border-light dark:border-border-dark group-hover:border-accent/30 transition-colors"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
 
-        {/* MEMBERSHIPS */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Professional Memberships
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>Student Member, Society for Engineering Education Enrichment (SEEE) — Member ID: IND TN 9999 9999 9256.</li>
-            <li>AICTE–MIC Innovation Ambassador (IC201810082), Vel Tech (from 2021). Expert Area: Entrepreneurship Development.</li>
-          </ul>
         </div>
-
-        {/* PARTICIPATIONS */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Workshops & Participations
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>Cyber Security Expert Workshop — Sathyabama University.</li>
-            <li>Technovation’15 Technical Exhibition — Sathyabama University.</li>
-            <li>User Awareness Session on IEEE Xplore — Vel Tech.</li>
-            <li>Human Resources Development Center Programs — Vel Tech.</li>
-            <li>Hands-on Training in IoT, Ethical Hacking, and NS3 — Vel Tech.</li>
-            <li>Remote Sensing Technology and Applications — ICTACT & Vel Tech.</li>
-            <li>Promoting Active Learning Workshop — Vel Tech.</li>
-            <li>International Webinar on “E-Business and Cyber Security” — DR CBS Cyber Security Services LLP (June 27–28, 2020).</li>
-            <li>One-Day Hands-on Training on Spring Boot & Hibernate — Vel Tech.</li>
-            <li>Pedagogical Practices & Tools for Effective Teaching Learning — IEEE Computer Society, Madras Section (July 26, 2024).</li>
-            <li>Faculty Immersive Workshop on Experiential Learning — SRMIST (July 24, 2024).</li>
-          </ul>
-        </div>
-
-        {/* FACULTY TRAINING */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Faculty Induction & Training Programs
-          </h3>
-          <ul className="list-disc list-inside space-y-4 text-[#6b645c] text-lg leading-relaxed">
-            <li>Faculty Induction Program 2018 — IIITDM Kancheepuram.</li>
-            <li>Faculty Induction Program 2019 — Vel Tech.</li>
-            <li>Innovation Ambassador (AI) Foundation Level Training — AICTE (2021–22).</li>
-            <li>Innovation Ambassador (AI) Advanced Level Training — AICTE (2021–22).</li>
-            <li>National Level Workshop on SDG-4 (Quality Education) in HEIs under NEP.</li>
-          </ul>
-        </div>
-
-        {/* JOB SKILLS */}
-        <div>
-          <h3 className="font-serif text-3xl mb-10">
-            Job-Related Skills
-          </h3>
-          <p className="text-[#6b645c] text-lg leading-relaxed">
-            Public Speaking · Time Management · Self-Motivation ·
-            Interpersonal Communication · Record Keeping
-          </p>
-        </div>
-
       </div>
     </section>
   );

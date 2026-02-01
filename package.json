@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "framer-motion": "^12.29.2",
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -17,7 +18,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.5",
+    "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.23",
