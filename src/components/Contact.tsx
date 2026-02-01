@@ -1,7 +1,39 @@
+import { useState, useRef, FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 import linkedinQR from "../assets/linkedin-qr.png"; 
-import { MapPin, Phone, Mail, Linkedin, Calendar, Globe, Languages, Heart, User, Send, MessageSquare } from "lucide-react";
+import { MapPin, Phone, Mail, Linkedin, Calendar, Globe, Languages, Heart, User, Send, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
 
 const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
+
+  const sendEmail = (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: null, message: '' });
+
+    // REPLACE THESE WITH YOUR ACTUAL EMAILJS KEYS
+    // Sign up at https://www.emailjs.com/ to get these
+    const SERVICE_ID = "YOUR_SERVICE_ID"; 
+    const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+
+    if (formRef.current) {
+      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+        .then((result) => {
+            console.log(result.text);
+            setStatus({ type: 'success', message: 'Message sent successfully! I will get back to you soon.' });
+            setIsSubmitting(false);
+            formRef.current?.reset(); // Clear the form
+        }, (error) => {
+            console.log(error.text);
+            setStatus({ type: 'error', message: 'Failed to send message. Please try again or email directly.' });
+            setIsSubmitting(false);
+        });
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -27,7 +59,7 @@ const Contact = () => {
         <div className="max-w-6xl mx-auto space-y-16">
 
           {/* =========================================================
-              1. BIOGRAPHICAL SNAPSHOT (Top)
+              1. BIOGRAPHICAL SNAPSHOT
              ========================================================= */}
           <div className="p-8 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-sm shadow-sm">
             <h3 className="font-serif text-xl text-text-light dark:text-text-dark mb-6 flex items-center gap-3">
@@ -60,7 +92,7 @@ const Contact = () => {
              ========================================================= */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             
-            {/* --- LEFT COLUMN: Contact Details & Socials --- */}
+            {/* --- LEFT COLUMN: Contact Details --- */}
             <div className="space-y-10">
               
               {/* Address Block */}
@@ -132,32 +164,33 @@ const Contact = () => {
 
             </div>
 
-            {/* --- RIGHT COLUMN: Contact Form --- */}
+            {/* --- RIGHT COLUMN: Contact Form (Active) --- */}
             <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-10 border border-border-light dark:border-border-dark rounded-sm shadow-xl relative overflow-hidden">
               
-              {/* Decorative Top Line */}
               <div className="absolute top-0 inset-x-0 h-1 bg-accent"></div>
 
               <h3 className="font-serif text-2xl text-text-light dark:text-text-dark mb-6">Send a Message</h3>
               
-              <form className="space-y-6">
+              <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
                 
-                {/* Name & Email Row */}
+                {/* Name & Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Your Name</label>
+                    <label htmlFor="user_name" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Your Name</label>
                     <input 
                       type="text" 
-                      id="name"
+                      name="user_name"
+                      required
                       placeholder="John Doe"
                       className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Email Address</label>
+                    <label htmlFor="user_email" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Email Address</label>
                     <input 
                       type="email" 
-                      id="email"
+                      name="user_email"
+                      required
                       placeholder="john@example.com"
                       className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
                     />
@@ -169,7 +202,8 @@ const Contact = () => {
                   <label htmlFor="subject" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Subject</label>
                   <input 
                     type="text" 
-                    id="subject"
+                    name="subject"
+                    required
                     placeholder="Research Collaboration / Inquiry"
                     className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
                   />
@@ -179,20 +213,30 @@ const Contact = () => {
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Message</label>
                   <textarea 
-                    id="message"
+                    name="message"
+                    required
                     rows={4}
                     placeholder="Write your message here..."
                     className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors resize-none"
                   ></textarea>
                 </div>
 
+                {/* Status Messages */}
+                {status.message && (
+                  <div className={`flex items-center gap-2 text-sm p-3 rounded-sm ${status.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {status.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                    {status.message}
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <button 
                   type="submit"
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-[#705530] transition-colors group"
+                  disabled={isSubmitting}
+                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-[#705530] disabled:opacity-50 disabled:cursor-not-allowed transition-all group"
                 >
-                  <span>Send Message</span>
-                  <Send size={16} className="group-hover:translate-x-1 transition-transform" />
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                  {!isSubmitting && <Send size={16} className="group-hover:translate-x-1 transition-transform" />}
                 </button>
 
               </form>
@@ -201,24 +245,20 @@ const Contact = () => {
           </div>
 
           {/* =========================================================
-              3. SIGNATURE & DECLARATION
+              3. SIGNATURE
              ========================================================= */}
           <div className="pt-20 mt-12 border-t border-border-light dark:border-border-dark flex flex-col md:flex-row justify-between items-end gap-8 text-muted-light dark:text-muted-dark">
-            
             <div className="text-center md:text-left">
               <p className="text-xs font-bold uppercase tracking-widest mb-1 text-accent">Place</p>
               <p className="font-serif text-xl text-text-light dark:text-text-dark">Chennai, India</p>
             </div>
-
             <div className="flex flex-col items-center md:items-end">
-              {/* Hand-written style signature */}
               <div className="font-signature text-5xl text-text-light dark:text-text-dark opacity-90 -rotate-2 mb-2">
                 Vivek Justus
               </div>
               <div className="h-[1px] w-32 bg-accent/40 mb-2"></div>
               <p className="text-xs font-bold uppercase tracking-widest text-accent">Dr. Vivek Justus</p>
             </div>
-            
           </div>
 
         </div>
