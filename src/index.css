@@ -21,3 +21,7 @@ body::before {
   opacity: 0.05;
   pointer-events: none;
 }
+
+html {
+  scroll-behavior: smooth;
+}
