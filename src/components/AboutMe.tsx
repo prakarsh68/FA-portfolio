@@ -1,4 +1,4 @@
-import { GraduationCap, Code, Lightbulb, Users } from "lucide-react";
+import { GraduationCap, Code, Lightbulb, Users, Quote } from "lucide-react";
 
 const AboutMe = () => {
   // Data for the right-side cards
@@ -24,7 +24,7 @@ const AboutMe = () => {
   const stats = [
     { label: "Years Experience", value: "08+" },
     { label: "Research Areas", value: "03+" },
-    { label: "Projects Guided", value: "15+" }, // Example value
+    { label: "Projects Guided", value: "15+" }, 
   ];
 
   return (
@@ -108,13 +108,15 @@ const AboutMe = () => {
               </div>
             ))}
 
-            {/* Resume Download Box (Optional addition for utility) */}
-            <div className="mt-4 p-6 bg-accent/10 border border-accent/20 flex items-center justify-between group cursor-pointer hover:bg-accent/20 transition-colors">
-              <div>
-                <h4 className="text-accent font-serif text-lg">Curriculum Vitae</h4>
-                <p className="text-xs text-muted-light dark:text-muted-dark uppercase tracking-wider">View full credentials</p>
-              </div>
-              <Code className="text-accent opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300" />
+            {/* Quote Box (Replaces Button) */}
+            <div className="mt-4 p-8 bg-accent/5 border-l-4 border-accent relative">
+              <Quote className="absolute top-4 right-4 text-accent/20 w-8 h-8" />
+              <blockquote className="font-serif text-lg italic text-text-light dark:text-text-dark leading-relaxed">
+                "The art of teaching is the art of assisting discovery."
+              </blockquote>
+              <cite className="block mt-4 text-xs font-bold tracking-widest uppercase text-accent not-italic">
+                — Mark Van Doren
+              </cite>
             </div>
           </div>
 

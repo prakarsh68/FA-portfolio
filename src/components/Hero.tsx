@@ -1,4 +1,3 @@
-import { ArrowRight, FileText } from "lucide-react";
 import portrait from "../assets/portrait.jpeg";
 
 const Hero = () => {
@@ -55,31 +54,38 @@ const Hero = () => {
               </p>
             </div>
 
-            {/* 4. Action Buttons */}
+            {/* 4. REPLACED: Adjectives / Core Values */}
             <div 
-              className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto animate-slide-up opacity-0"
+              className="pt-6 animate-slide-up opacity-0"
               style={{ animationDelay: "400ms" }}
             >
-              {/* Primary Button */}
-              <a
-                href="#innovations"
-                className="group relative px-8 py-4 bg-text-light dark:bg-white text-white dark:text-black overflow-hidden transition-all hover:scale-[1.02]"
-              >
-                <div className="absolute inset-0 w-full h-full bg-accent translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></div>
-                <span className="relative flex items-center justify-center gap-3 text-xs tracking-[0.2em] uppercase font-bold group-hover:text-white transition-colors">
-                  Explore Innovations <ArrowRight size={16} />
-                </span>
-              </a>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-8">
+                
+                {/* Item 1 */}
+                <div className="flex items-center gap-3 group">
+                   <div className="w-1.5 h-1.5 bg-accent rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                   <span className="text-xs font-bold tracking-[0.25em] uppercase text-text-light dark:text-text-dark opacity-80">
+                     Visionary
+                   </span>
+                </div>
 
-              {/* Secondary Button */}
-              <a
-                href="#profile"
-                className="group px-8 py-4 border border-border-light dark:border-border-dark text-text-light dark:text-text-dark hover:bg-base-light dark:hover:bg-surface-dark transition-all"
-              >
-                <span className="flex items-center justify-center gap-3 text-xs tracking-[0.2em] uppercase font-bold">
-                  Academic Profile <FileText size={16} className="text-accent" />
-                </span>
-              </a>
+                {/* Item 2 */}
+                <div className="flex items-center gap-3 group">
+                   <div className="w-1.5 h-1.5 bg-accent rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                   <span className="text-xs font-bold tracking-[0.25em] uppercase text-text-light dark:text-text-dark opacity-80">
+                     Strategic
+                   </span>
+                </div>
+
+                {/* Item 3 */}
+                <div className="flex items-center gap-3 group">
+                   <div className="w-1.5 h-1.5 bg-accent rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                   <span className="text-xs font-bold tracking-[0.25em] uppercase text-text-light dark:text-text-dark opacity-80">
+                     Impactful
+                   </span>
+                </div>
+
+              </div>
             </div>
           </div>
 
@@ -99,11 +105,10 @@ const Hero = () => {
                 <img
                   src={portrait}
                   alt="Dr. Vivek Justus"
-                  // UPDATED CLASSNAME: Removed grayscale and opacity filters
                   className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105"
                 />
                 
-                {/* Subtle Overlay on Hover for depth */}
+                {/* Subtle Overlay on Hover */}
                 <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
 
