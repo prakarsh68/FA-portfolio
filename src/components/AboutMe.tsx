@@ -22,9 +22,9 @@ const AboutMe = () => {
 
   // Data for the stats row
   const stats = [
-    { label: "Years Experience", value: "06+" },
-    { label: "Research Areas", value: "04" },
-    { label: "Projects Guided", value: "20+" }, // Example value
+    { label: "Years Experience", value: "08+" },
+    { label: "Research Areas", value: "03+" },
+    { label: "Projects Guided", value: "15+" }, // Example value
   ];
 
   return (

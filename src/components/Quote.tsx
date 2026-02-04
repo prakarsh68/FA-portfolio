@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Quote as QuoteIcon } from "lucide-react";
 
 const Quote = () => {
@@ -29,7 +29,6 @@ const Quote = () => {
   // Helper to render text with specific words highlighted
   const renderStyledText = (text: string) => {
     // We split by specific keywords to wrap them in accent spans
-    // Note: This is a simple visual hack for the typewriter effect
     const parts = text.split(/(innovation|impact)/gi);
     return parts.map((part, i) => {
       if (part.toLowerCase() === "innovation" || part.toLowerCase() === "impact") {

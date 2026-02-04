@@ -1,11 +1,87 @@
-import { Trophy, Award, Mic, HeartHandshake, ExternalLink, Newspaper, Globe } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import {
+  Trophy,
+  Award,
+  Mic,
+  HeartHandshake,
+  ExternalLink,
+  Newspaper,
+  Globe,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+} from "lucide-react";
+
+// --- Types ---
+interface GalleryImage {
+  src: string;
+  alt: string;
+  category: "guinness" | "award" | "honor" | "initiative";
+}
 
 const WorldRecordsAndAwards = () => {
-  // Image placeholders (Ensure these match your actual file paths)
-  const guinnessImages = ["/world-records/wr-1.jpg", "/world-records/wr-2.jpg", "/world-records/wr-3.jpg"];
-  const awardImages = ["/awards/award-1.jpg", "/awards/award-2.jpg", "/awards/award-3.jpg"];
-  const honorImages = ["/honors/honor-1.jpg", "/honors/honor-2.jpg", "/honors/honor-3.jpg", "/honors/honor-4.jpg"];
-  const initiativeImages = ["/initiatives/initiative-1.jpg", "/initiatives/initiative-2.jpg", "/initiatives/initiative-3.jpg"];
+  // --- Data ---
+  const galleryData: GalleryImage[] = [
+    // Guinness
+    { src: "/world-records/wr-1.jpg", alt: "Guinness Record Formation", category: "guinness" },
+    { src: "/world-records/wr-2.jpg", alt: "Accessibility Symbol", category: "guinness" },
+    { src: "/world-records/wr-3.jpg", alt: "Official Certificate", category: "guinness" },
+    // Awards
+    { src: "/awards/award-1.jpg", alt: "3M-CII Award Ceremony", category: "award" },
+    { src: "/awards/award-2.jpg", alt: "Young Innovator Presentation", category: "award" },
+    { src: "/awards/award-3.jpg", alt: "Receiving the Award", category: "award" },
+    // Honors
+    { src: "/honors/honor-1.jpg", alt: "Public Felicitation", category: "honor" },
+    { src: "/honors/honor-2.jpg", alt: "Guest of Honor", category: "honor" },
+    { src: "/honors/honor-3.jpg", alt: "Keynote Speech", category: "honor" },
+    { src: "/honors/honor-4.jpg", alt: "Recognition Event", category: "honor" },
+    // Initiatives
+    { src: "/initiatives/initiative-1.jpg", alt: "Social Initiative Launch", category: "initiative" },
+    { src: "/initiatives/initiative-2.jpg", alt: "Community Service", category: "initiative" },
+    { src: "/initiatives/initiative-3.jpg", alt: "Impact Project", category: "initiative" },
+  ];
+
+  // Helper to filter images by category for sections
+  const getImages = (cat: string) => galleryData.filter((img) => img.category === cat);
+
+  // --- Lightbox State ---
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Navigation Handlers
+  const nextImage = useCallback(() => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((prev) => (prev! + 1) % galleryData.length);
+    }
+  }, [lightboxIndex, galleryData.length]);
+
+  const prevImage = useCallback(() => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((prev) => (prev! - 1 + galleryData.length) % galleryData.length);
+    }
+  }, [lightboxIndex, galleryData.length]);
+
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, nextImage, prevImage]);
+
+  // Prevent scroll when lightbox is open
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [lightboxIndex]);
+
 
   return (
     <section
@@ -14,8 +90,8 @@ const WorldRecordsAndAwards = () => {
     >
       <div className="container px-6 mx-auto">
 
-        {/* --- SECTION HEADER --- */}
-        <div className="text-center mb-24 space-y-6">
+        {/* --- HEADER --- */}
+        <div className="text-center mb-20 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold tracking-widest uppercase mb-2">
             <Trophy size={14} />
             Global Recognition
@@ -24,29 +100,26 @@ const WorldRecordsAndAwards = () => {
             World Records & Awards
           </h2>
           <div className="w-16 h-[2px] bg-accent mx-auto"></div>
-          <p className="max-w-3xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
-            Recognitions received for social innovation, inclusive technology,
-            and impactful contributions to public welfare and disability awareness.
+          <p className="max-w-2xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
+            Honored for pioneering contributions to social innovation, accessibility, and technology.
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto space-y-32">
+        <div className="max-w-6xl mx-auto space-y-24">
 
           {/* =========================================================
-              1. GUINNESS WORLD RECORD (HERO FEATURE)
+              1. GUINNESS WORLD RECORD (Hero Feature)
              ========================================================= */}
-          <div className="relative p-8 md:p-12 rounded-sm border border-accent/20 bg-surface-light dark:bg-surface-dark shadow-2xl overflow-hidden group">
-            
-            {/* Watermark Icon */}
-            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
-              <Globe size={200} />
+          <div className="relative group p-8 md:p-12 border border-accent/20 bg-surface-light dark:bg-surface-dark shadow-2xl overflow-hidden rounded-sm">
+            {/* Watermark */}
+            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
+              <Globe size={240} />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
-              {/* Text Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+              {/* Content */}
               <div className="space-y-8">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <h3 className="font-serif text-3xl md:text-5xl text-text-light dark:text-text-dark leading-tight">
                     Guinness World Record
                   </h3>
@@ -54,51 +127,38 @@ const WorldRecordsAndAwards = () => {
                     & Asia Book of Records
                   </p>
                 </div>
+                
+                <p className="text-muted-light dark:text-muted-dark text-lg leading-relaxed">
+                  Organized and formed the <strong className="text-text-light dark:text-text-dark">world’s largest human image of a wheelchair accessibility symbol</strong> on December 3, 2018. 
+                  This initiative mobilized thousands to promote inclusivity for persons with disabilities.
+                </p>
 
-                <div className="space-y-4 text-muted-light dark:text-muted-dark text-lg leading-relaxed">
-                  <p>
-                    Organized and formed the <strong className="text-text-light dark:text-text-dark">world’s largest human image of a wheelchair accessibility symbol</strong> on 
-                    December 3, 2018, marking the International Day of Persons with Disabilities.
-                  </p>
-                  <p>
-                    This initiative mobilized thousands to promote inclusivity, accessibility, and equal participation in society.
-                  </p>
-                </div>
-
-                {/* Links */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                  <a 
-                    href="https://www.guinnessworldrecords.com/world-records/501162-largest-human-image-of-a-wheelchair-accessibility%c2%a0symbol" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white rounded-sm font-bold uppercase tracking-wider text-xs hover:bg-accent-hover transition-colors"
-                  >
-                    <ExternalLink size={16} />
-                    View Official Record
-                  </a>
-                  <a 
-                    href="https://www.veltech.edu.in/cse-guinness-world-record/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-3 border border-border-light dark:border-border-dark text-text-light dark:text-text-dark rounded-sm font-bold uppercase tracking-wider text-xs hover:border-accent hover:text-accent transition-colors"
-                  >
-                    <ExternalLink size={16} />
-                    Institution Coverage
+                <div className="flex flex-wrap gap-4">
+                  <a href="#" className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-accent hover:text-text-light transition-colors">
+                    <ExternalLink size={16} /> View Official Record
                   </a>
                 </div>
               </div>
 
-              {/* Image Grid (Masonry Style) */}
+              {/* Gallery Grid */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <img src={guinnessImages[0]} alt="GWR 1" className="w-full h-48 object-cover rounded-sm shadow-md hover:scale-105 transition-transform duration-500" />
-                  <img src={guinnessImages[1]} alt="GWR 2" className="w-full h-32 object-cover rounded-sm shadow-md hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="pt-8">
-                  <img src={guinnessImages[2]} alt="Certificate" className="w-full h-64 object-cover rounded-sm shadow-md hover:scale-105 transition-transform duration-500" />
-                </div>
+                {getImages("guinness").map((img, i) => (
+                  <div 
+                    key={i} 
+                    className={`relative overflow-hidden rounded-sm cursor-pointer group/img ${i === 0 ? 'col-span-2' : ''}`}
+                    onClick={() => setLightboxIndex(galleryData.indexOf(img))}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-full object-cover aspect-[4/3] transition-transform duration-700 group-hover/img:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
+                      <ZoomIn className="text-white drop-shadow-md" size={32} />
+                    </div>
+                  </div>
+                ))}
               </div>
-
             </div>
           </div>
 
@@ -106,17 +166,29 @@ const WorldRecordsAndAwards = () => {
               2. YOUNG INNOVATORS AWARD
              ========================================================= */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
-            
-            {/* Image Gallery */}
-            <div className="grid grid-cols-2 gap-4 order-2 lg:order-1">
-              <img src={awardImages[0]} alt="Award 1" className="col-span-2 w-full h-48 object-cover rounded-sm shadow-md" />
-              <img src={awardImages[1]} alt="Award 2" className="w-full h-40 object-cover rounded-sm shadow-md" />
-              <img src={awardImages[2]} alt="Award 3" className="w-full h-40 object-cover rounded-sm shadow-md" />
+            {/* Image Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {getImages("award").map((img, i) => (
+                <div 
+                  key={i} 
+                  className={`relative overflow-hidden rounded-sm cursor-pointer group/img ${i === 0 ? 'col-span-2' : ''}`}
+                  onClick={() => setLightboxIndex(galleryData.indexOf(img))}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-full object-cover aspect-video transition-transform duration-700 group-hover/img:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
+                     <ZoomIn className="text-white drop-shadow-md" size={24} />
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Content */}
-            <div className="space-y-8 order-1 lg:order-2">
-              <div className="inline-flex items-center gap-2 text-accent mb-2">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 text-accent mb-2">
                 <Award size={28} />
                 <span className="h-[1px] w-12 bg-accent"></span>
               </div>
@@ -126,118 +198,157 @@ const WorldRecordsAndAwards = () => {
               </h3>
               
               <p className="text-muted-light dark:text-muted-dark text-lg leading-relaxed">
-                Honored by India’s <strong className="text-text-light dark:text-text-dark">3M–CII (Confederation of Indian Industry)</strong> for the societal impact of my innovation. This prestigious recognition was awarded at the CII Innovation Summit in Bangalore.
+                Honored by India’s <strong className="text-text-light dark:text-text-dark">3M–CII (Confederation of Indian Industry)</strong> for societal impact through technological innovation. This prestigious recognition highlights contributions to public welfare systems.
               </p>
-
-              <div className="space-y-3">
-                <a 
-                  href="http://www.3myounginnovatorschallenge.com/winners-of-the-2019-3m-cii-young-innovators-challenge-awards/" 
-                  target="_blank" rel="noopener noreferrer"
-                  className="group flex items-center gap-3 text-muted-light dark:text-muted-dark hover:text-accent transition-colors"
-                >
-                  <span className="w-2 h-2 rounded-full bg-accent group-hover:scale-150 transition-transform"></span>
-                  <span className="underline decoration-transparent group-hover:decoration-accent transition-all">3M–CII Official Winner's Page</span>
-                </a>
-                <a 
-                  href="https://www.thehindu.com/news/cities/chennai/city-teams-bag-awards-for-innovations/article29494250.ece" 
-                  target="_blank" rel="noopener noreferrer"
-                  className="group flex items-center gap-3 text-muted-light dark:text-muted-dark hover:text-accent transition-colors"
-                >
-                  <span className="w-2 h-2 rounded-full bg-accent group-hover:scale-150 transition-transform"></span>
-                  <span className="underline decoration-transparent group-hover:decoration-accent transition-all">Feature in The Hindu</span>
-                </a>
-              </div>
+              
+              <ul className="space-y-2 pt-2">
+                <li className="flex items-center gap-2 text-muted-light dark:text-muted-dark text-sm">
+                  <span className="w-1.5 h-1.5 bg-accent rounded-full"></span>
+                  Awarded at CII Innovation Summit, Bangalore
+                </li>
+              </ul>
             </div>
           </div>
 
           {/* =========================================================
-              3. HONORS & MEDIA (GRID LAYOUT)
+              3. HONORS & MEDIA (Split Layout)
              ========================================================= */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-border-light dark:border-border-dark pt-16">
             
-            {/* Honors */}
+            {/* Honors Section */}
             <div className="space-y-8">
               <div className="flex items-center gap-3">
                 <Mic className="text-accent" size={24} />
                 <h3 className="font-serif text-2xl text-text-light dark:text-text-dark">Public Honors</h3>
               </div>
               <p className="text-muted-light dark:text-muted-dark leading-relaxed">
-                Felicitation by <strong>Mr. Thalavai Sundaram Pillai</strong>, former Member of Legislative Assembly, for contributions to social welfare innovation.
+                Felicitation by <strong>Mr. Thalavai Sundaram Pillai</strong> (former MLA) and other dignitaries for excellence in social service.
               </p>
-              <div className="grid grid-cols-2 gap-4">
-                {honorImages.map((img, i) => (
-                  <img key={i} src={img} alt={`Honor ${i}`} className="w-full h-32 object-cover rounded-sm shadow-sm hover:opacity-90 transition-opacity" />
+              
+              <div className="grid grid-cols-2 gap-3">
+                {getImages("honor").map((img, i) => (
+                  <div 
+                    key={i} 
+                    className="overflow-hidden rounded-sm cursor-pointer group"
+                    onClick={() => setLightboxIndex(galleryData.indexOf(img))}
+                  >
+                    <img src={img.src} alt={img.alt} className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Media Features */}
+            {/* Media Section (Text Heavy) */}
             <div className="space-y-8">
               <div className="flex items-center gap-3">
                 <Newspaper className="text-accent" size={24} />
                 <h3 className="font-serif text-2xl text-text-light dark:text-text-dark">Media Coverage</h3>
               </div>
               <p className="text-muted-light dark:text-muted-dark leading-relaxed">
-                Featured as a <strong>Young Innovator of India</strong> across national media platforms on National Youth Day.
+                Featured as a <strong>Young Innovator of India</strong> across national newspapers and digital platforms on National Youth Day.
               </p>
               
-              <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-4">
                 {[
-                  { title: "Eenadu Youth Special Feature", link: "https://m.eenadu.net/sundaymagazine/article/320000041" },
-                  { title: "EDEX Live: Innovation Feature", link: "https://m.edexlive.com/article/people/this-device-can-send-automatic-signals-to-108-in-the-event-of-an-accident-in-just-under-three-minute/8362" },
-                  { title: "Careers360: Record Breakers", link: "https://news.careers360.com/vel-tech-cse-students-create-guinness-world-record" },
-                ].map((item, idx) => (
-                  <a 
-                    key={idx}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-sm group hover:border-accent transition-colors"
-                  >
-                    <span className="font-medium text-text-light dark:text-text-dark group-hover:text-accent transition-colors">{item.title}</span>
-                    <ExternalLink size={16} className="text-muted-light dark:text-muted-dark group-hover:text-accent" />
-                  </a>
+                  "Eenadu Youth Special Feature",
+                  "EDEX Live: Innovation Spotlight",
+                  "Careers360: Record Breakers",
+                  "The Hindu: City Teams Bag Awards"
+                ].map((title, i) => (
+                  <div key={i} className="flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-sm group hover:border-accent transition-colors cursor-pointer">
+                    <span className="font-medium text-text-light dark:text-text-dark group-hover:text-accent transition-colors">{title}</span>
+                    <ExternalLink size={16} className="text-muted-light group-hover:text-accent" />
+                  </div>
                 ))}
               </div>
             </div>
           </div>
 
           {/* =========================================================
-              4. SOCIAL INITIATIVES (CAROUSEL / STRIP)
+              4. INITIATIVES (Strip Layout)
              ========================================================= */}
-          <div className="pt-16 border-t border-border-light dark:border-border-dark">
-             <div className="text-center mb-12">
-               <div className="inline-flex items-center justify-center p-3 bg-accent/10 rounded-full text-accent mb-4">
-                 <HeartHandshake size={24} />
-               </div>
-               <h3 className="font-serif text-3xl text-text-light dark:text-text-dark">Social Initiatives</h3>
-               <p className="mt-4 text-muted-light dark:text-muted-dark max-w-2xl mx-auto">
-                  Developing systems for public good, from blood donor apps to the <strong>REFLEX</strong> touch-free sanitization units during COVID-19.
-               </p>
+          <div className="space-y-8 pt-8">
+             <div className="flex items-center justify-center gap-2 mb-4">
+                <HeartHandshake className="text-accent" size={20} />
+                <span className="text-xs font-bold uppercase tracking-widest text-muted-light dark:text-muted-dark">Social Initiatives</span>
              </div>
-
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                {initiativeImages.map((img, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-sm aspect-square">
-                    <img 
-                      src={img} 
-                      alt={`Initiative ${i}`} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
-                  </div>
+             
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {getImages("initiative").map((img, i) => (
+                   <div 
+                      key={i} 
+                      className="aspect-square overflow-hidden rounded-sm relative group cursor-pointer"
+                      onClick={() => setLightboxIndex(galleryData.indexOf(img))}
+                   >
+                     <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <span className="text-white text-xs font-bold uppercase tracking-wider">{img.alt}</span>
+                     </div>
+                   </div>
                 ))}
-                {/* Add a "More" block if needed */}
-                <div className="flex items-center justify-center bg-surface-light dark:bg-surface-dark border border-dashed border-border-light dark:border-border-dark rounded-sm aspect-square">
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-light dark:text-muted-dark text-center px-4">
-                    Impact through<br/>Innovation
-                  </span>
+                {/* View More Placeholder */}
+                <div className="aspect-square flex items-center justify-center bg-surface-light dark:bg-surface-dark border border-dashed border-border-light dark:border-border-dark rounded-sm text-center p-4">
+                  <span className="text-xs text-muted-light dark:text-muted-dark">More initiatives impacting lives across India</span>
                 </div>
              </div>
           </div>
 
         </div>
       </div>
+
+      {/* =========================================================
+          LIGHTBOX OVERLAY
+         ========================================================= */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center">
+          
+          {/* Controls */}
+          <button
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full"
+            aria-label="Close"
+          >
+            <X size={32} />
+          </button>
+
+          <button
+            onClick={prevImage}
+            className="absolute left-4 md:left-8 text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-full"
+            aria-label="Previous Image"
+          >
+            <ChevronLeft size={40} />
+          </button>
+
+          <button
+            onClick={nextImage}
+            className="absolute right-4 md:right-8 text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-full"
+            aria-label="Next Image"
+          >
+            <ChevronRight size={40} />
+          </button>
+
+          {/* Image & Caption Container */}
+          <div className="flex flex-col items-center max-w-5xl w-full px-4 animate-fade-in">
+            <div className="relative w-full max-h-[80vh] flex justify-center">
+               <img
+                src={galleryData[lightboxIndex].src}
+                alt={galleryData[lightboxIndex].alt}
+                className="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-sm"
+              />
+            </div>
+            
+            <div className="mt-6 text-center space-y-2">
+              <h4 className="text-white text-xl font-serif tracking-wide">
+                {galleryData[lightboxIndex].alt}
+              </h4>
+              <p className="text-white/50 text-xs font-bold uppercase tracking-widest">
+                {lightboxIndex + 1} / {galleryData.length}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
     </section>
   );
 };

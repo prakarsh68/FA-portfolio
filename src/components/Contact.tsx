@@ -1,38 +1,15 @@
-import { useState, useRef, FormEvent } from "react";
-import emailjs from "@emailjs/browser";
 import linkedinQR from "../assets/linkedin-qr.png"; 
-import { MapPin, Phone, Mail, Linkedin, Calendar, Globe, Languages, Heart, User, Send, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Linkedin, Calendar, Globe, Languages, Heart, User, Briefcase, GraduationCap, Mic, Clock, ArrowRight } from "lucide-react";
 
 const Contact = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
-
-  const sendEmail = (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus({ type: null, message: '' });
-
-    // REPLACE THESE WITH YOUR ACTUAL EMAILJS KEYS
-    // Sign up at https://www.emailjs.com/ to get these
-    const SERVICE_ID = "YOUR_SERVICE_ID"; 
-    const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-    const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-
-    if (formRef.current) {
-      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
-        .then((result) => {
-            console.log(result.text);
-            setStatus({ type: 'success', message: 'Message sent successfully! I will get back to you soon.' });
-            setIsSubmitting(false);
-            formRef.current?.reset(); // Clear the form
-        }, (error) => {
-            console.log(error.text);
-            setStatus({ type: 'error', message: 'Failed to send message. Please try again or email directly.' });
-            setIsSubmitting(false);
-        });
-    }
-  };
+  
+  // --- CONFIG: Pre-filled Email Details ---
+  const emailAddress = "vivekjustus@gmail.com";
+  const subject = encodeURIComponent("Professional Inquiry via Portfolio");
+  const body = encodeURIComponent("Dear Dr. Vivek Justus,\n\nI am interested in discussing...");
+  
+  // Combine them into a mailto link
+  const mailtoLink = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
 
   return (
     <section
@@ -44,7 +21,7 @@ const Contact = () => {
         {/* --- HEADER --- */}
         <div className="text-center mb-20 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold tracking-widest uppercase mb-2">
-            <MessageSquare size={14} />
+            <User size={14} />
             Connect
           </div>
           <h2 className="font-serif text-3xl md:text-5xl text-text-light dark:text-text-dark">
@@ -52,7 +29,7 @@ const Contact = () => {
           </h2>
           <div className="w-16 h-[2px] bg-accent mx-auto"></div>
           <p className="max-w-2xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
-            I welcome inquiries regarding academic collaboration, research opportunities, and guest lectures.
+            I welcome professional inquiries regarding academic collaboration, research opportunities, and industrial consultancy.
           </p>
         </div>
 
@@ -88,20 +65,20 @@ const Contact = () => {
           </div>
 
           {/* =========================================================
-              2. MAIN GRID: INFO (Left) vs FORM (Right)
+              2. MAIN GRID: CONTACT INFO vs ENGAGEMENT SCOPE
              ========================================================= */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
             
-            {/* --- LEFT COLUMN: Contact Details --- */}
-            <div className="space-y-10">
+            {/* --- LEFT COLUMN: Contact Coordinates --- */}
+            <div className="space-y-10 flex flex-col h-full">
               
               {/* Address Block */}
               <div>
                 <h3 className="font-serif text-2xl text-text-light dark:text-text-dark mb-6">Postal Address</h3>
-                <div className="flex items-start gap-5 p-6 border-l-2 border-accent bg-surface-light dark:bg-surface-dark shadow-sm">
+                <div className="flex items-start gap-5 p-6 border-l-2 border-accent bg-surface-light dark:bg-surface-dark shadow-sm h-full">
                   <MapPin size={28} className="text-accent shrink-0 mt-1" />
-                  <address className="not-italic text-muted-light dark:text-muted-dark leading-relaxed">
-                    <strong className="block text-text-light dark:text-text-dark text-lg mb-2 font-serif">Dr. Vivek Justus <span className="text-sm font-sans font-normal text-muted-light/80">(M.E., Ph.D.)</span></strong>
+                  <address className="not-italic text-muted-light dark:text-muted-dark leading-relaxed text-lg">
+                    <strong className="block text-text-light dark:text-text-dark text-xl mb-2 font-serif">Dr. Vivek Justus <span className="text-sm font-sans font-normal text-muted-light/80">(M.E., Ph.D.)</span></strong>
                     11/31C, Princess Cottage,<br />
                     Arockiyapuram, Near Monday Market,<br />
                     Kanyakumari – 629802,<br />
@@ -110,15 +87,15 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Phone & Email */}
-              <div className="space-y-6">
+              {/* Digital Coordinates */}
+              <div className="space-y-6 flex-grow">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full text-accent">
                     <Phone size={20} />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-light/60 dark:text-muted-dark/60">Phone</p>
-                    <div className="flex flex-col sm:flex-row sm:gap-4 text-text-light dark:text-text-dark font-medium">
+                    <div className="flex flex-col sm:flex-row sm:gap-4 text-text-light dark:text-text-dark font-medium text-lg">
                       <a href="tel:+917708806374" className="hover:text-accent transition-colors">+91 77088 06374</a>
                       <span className="hidden sm:inline text-border-light">|</span>
                       <a href="tel:+919600060814" className="hover:text-accent transition-colors">+91 96000 60814</a>
@@ -132,7 +109,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-light/60 dark:text-muted-dark/60">Email</p>
-                    <a href="mailto:vivekjustus@gmail.com" className="text-text-light dark:text-text-dark font-medium hover:text-accent transition-colors underline decoration-accent/30 underline-offset-4">
+                    <a href={mailtoLink} className="text-text-light dark:text-text-dark font-medium text-lg hover:text-accent transition-colors underline decoration-accent/30 underline-offset-4">
                       vivekjustus@gmail.com
                     </a>
                   </div>
@@ -140,106 +117,99 @@ const Contact = () => {
               </div>
 
               {/* LinkedIn Mini-Card */}
-              <div className="flex items-center gap-6 pt-6 border-t border-border-light dark:border-border-dark">
-                <div className="w-24 h-24 p-2 bg-white border border-border-light rounded-sm shrink-0">
+              <div className="flex items-center gap-6 pt-8 border-t border-border-light dark:border-border-dark">
+                <div className="w-20 h-20 p-2 bg-white border border-border-light rounded-sm shrink-0">
                   <img src={linkedinQR} alt="LinkedIn QR" className="w-full h-full object-contain" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <Linkedin size={18} className="text-[#0077b5]" />
-                    <span className="font-serif text-lg text-text-light dark:text-text-dark">LinkedIn Profile</span>
+                    <span className="font-serif text-lg text-text-light dark:text-text-dark">Connect on LinkedIn</span>
                   </div>
-                  <p className="text-sm text-muted-light dark:text-muted-dark mb-3">
-                    Connect for professional updates.
-                  </p>
                   <a 
                     href="https://linkedin.com/in/vivekjustus" 
                     target="_blank" rel="noopener noreferrer"
                     className="text-xs font-bold uppercase tracking-widest text-accent hover:text-text-light transition-colors"
                   >
-                    View Profile &rarr;
+                    View Full Profile &rarr;
                   </a>
                 </div>
               </div>
 
             </div>
 
-            {/* --- RIGHT COLUMN: Contact Form (Active) --- */}
-            <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-10 border border-border-light dark:border-border-dark rounded-sm shadow-xl relative overflow-hidden">
+            {/* --- RIGHT COLUMN: Scope of Engagement --- */}
+            <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-10 border border-border-light dark:border-border-dark rounded-sm shadow-xl relative overflow-hidden flex flex-col justify-between">
               
+              {/* Decorative Top Line */}
               <div className="absolute top-0 inset-x-0 h-1 bg-accent"></div>
 
-              <h3 className="font-serif text-2xl text-text-light dark:text-text-dark mb-6">Send a Message</h3>
-              
-              <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
-                
-                {/* Name & Email */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="user_name" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Your Name</label>
-                    <input 
-                      type="text" 
-                      name="user_name"
-                      required
-                      placeholder="John Doe"
-                      className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="user_email" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Email Address</label>
-                    <input 
-                      type="email" 
-                      name="user_email"
-                      required
-                      placeholder="john@example.com"
-                      className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
-                    />
-                  </div>
-                </div>
+              <div>
+                <h3 className="font-serif text-2xl text-text-light dark:text-text-dark mb-6">Scope of Engagement</h3>
+                <p className="text-muted-light dark:text-muted-dark leading-relaxed mb-8">
+                  I am available for collaboration in the following capacities. Please ensure all correspondence is relevant to these domains.
+                </p>
 
-                {/* Subject */}
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Subject</label>
-                  <input 
-                    type="text" 
-                    name="subject"
-                    required
-                    placeholder="Research Collaboration / Inquiry"
-                    className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors"
-                  />
-                </div>
+                <ul className="space-y-6">
+                  {/* Item 1 */}
+                  <li className="flex items-start gap-4 p-4 bg-base-light dark:bg-base-dark rounded-sm border border-transparent hover:border-accent/30 transition-colors">
+                    <div className="mt-1 text-accent">
+                      <Briefcase size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-text-light dark:text-text-dark font-bold text-sm uppercase tracking-wider mb-1">Research Collaboration</h4>
+                      <p className="text-sm text-muted-light dark:text-muted-dark leading-relaxed">
+                        Joint research in AI, IoT, Embedded Systems, and funding proposal development.
+                      </p>
+                    </div>
+                  </li>
 
-                {/* Message */}
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-xs font-bold uppercase tracking-widest text-muted-light/80 dark:text-muted-dark/80">Message</label>
-                  <textarea 
-                    name="message"
-                    required
-                    rows={4}
-                    placeholder="Write your message here..."
-                    className="w-full px-4 py-3 bg-base-light dark:bg-base-dark border border-border-light dark:border-border-dark rounded-sm focus:outline-none focus:border-accent text-text-light dark:text-text-dark placeholder-muted-light/40 transition-colors resize-none"
-                  ></textarea>
-                </div>
+                  {/* Item 2 */}
+                  <li className="flex items-start gap-4 p-4 bg-base-light dark:bg-base-dark rounded-sm border border-transparent hover:border-accent/30 transition-colors">
+                    <div className="mt-1 text-accent">
+                      <GraduationCap size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-text-light dark:text-text-dark font-bold text-sm uppercase tracking-wider mb-1">Industrial Consultancy</h4>
+                      <p className="text-sm text-muted-light dark:text-muted-dark leading-relaxed">
+                        Technical advising for startups and industries regarding automation and smart systems.
+                      </p>
+                    </div>
+                  </li>
 
-                {/* Status Messages */}
-                {status.message && (
-                  <div className={`flex items-center gap-2 text-sm p-3 rounded-sm ${status.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {status.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
-                    {status.message}
-                  </div>
-                )}
+                  {/* Item 3 */}
+                  <li className="flex items-start gap-4 p-4 bg-base-light dark:bg-base-dark rounded-sm border border-transparent hover:border-accent/30 transition-colors">
+                    <div className="mt-1 text-accent">
+                      <Mic size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-text-light dark:text-text-dark font-bold text-sm uppercase tracking-wider mb-1">Guest Lectures</h4>
+                      <p className="text-sm text-muted-light dark:text-muted-dark leading-relaxed">
+                         Keynote sessions on Innovation, Entrepreneurship, and Emerging Technologies.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
 
-                {/* Submit Button */}
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-[#705530] disabled:opacity-50 disabled:cursor-not-allowed transition-all group"
+              {/* Bottom "Office Hours" or Response Note */}
+              <div className="mt-10 pt-6 border-t border-border-light dark:border-border-dark flex items-center gap-4 text-muted-light dark:text-muted-dark">
+                 <Clock size={20} className="text-accent" />
+                 <p className="text-sm italic">
+                   Typical response time: 24–48 hours for academic inquiries.
+                 </p>
+              </div>
+
+              {/* Direct Mail Action Button (Updated) */}
+              <div className="mt-8">
+                <a 
+                   href={mailtoLink}
+                   className="flex items-center justify-center gap-3 w-full py-4 bg-text-light dark:bg-white text-white dark:text-black font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-accent dark:hover:bg-accent hover:text-white transition-colors"
                 >
-                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                  {!isSubmitting && <Send size={16} className="group-hover:translate-x-1 transition-transform" />}
-                </button>
+                  Initiate Correspondence <ArrowRight size={16} />
+                </a>
+              </div>
 
-              </form>
             </div>
 
           </div>

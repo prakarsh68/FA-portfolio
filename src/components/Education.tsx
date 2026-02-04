@@ -1,4 +1,4 @@
-import { GraduationCap, Award } from "lucide-react";
+import { Award } from "lucide-react";
 
 const Education = () => {
   // Data array for cleaner rendering and easy updates

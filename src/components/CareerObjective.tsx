@@ -34,7 +34,7 @@ const CareerObjective = () => {
             {/* The "Vision" Statement */}
             <blockquote className="relative">
               <p className="font-serif text-xl md:text-2xl leading-relaxed text-muted-light dark:text-muted-dark italic">
-                "I am seeking an opportunity to secure a position as an <span className="text-accent not-italic font-medium">Assistant Professor</span>, 
+                "I am seeking an opportunity to secure a position as a <span className="text-accent not-italic font-medium">Professor</span>, 
                 where I can leverage my academic expertise, teaching skills, and research abilities to contribute 
                 meaningfully to the department. I am committed to fostering a dynamic learning environment and 
                 enhancing academic excellence."
@@ -43,11 +43,11 @@ const CareerObjective = () => {
 
             {/* Signature / Footer */}
             <div className="flex flex-col items-center gap-2 pt-6">
-              <span className="text-sm font-bold tracking-[0.2em] uppercase text-text-light dark:text-text-dark">
+              <span className="text-sm font-bold tracking-[0.2em] text-text-light dark:text-text-dark">
                 Dr. Vivek Justus
               </span>
               <span className="text-xs text-muted-light/60 dark:text-muted-dark/60 tracking-wider">
-                Vision Statement
+                Statement
               </span>
             </div>
 

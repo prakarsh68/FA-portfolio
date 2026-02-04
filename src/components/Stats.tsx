@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, JSX } from "react";
-import { Trophy, BookOpen, Lightbulb, Clock } from "lucide-react";
+import { Trophy, Lightbulb, Clock } from "lucide-react";
 
 // --- Types for TypeScript Safety ---
 interface StatItem {
@@ -63,18 +63,18 @@ const Stats = () => {
     {
       id: 1,
       label: "Years of Experience",
-      value: 6.5,
+      value: 8,
       suffix: "+",
       icon: <Clock size={40} />,
       isNumber: true
     },
     {
       id: 2,
-      label: "Academic Contributions",
-      value: 300,
-      suffix: "+",
-      icon: <BookOpen size={40} />,
-      isNumber: true
+      label: "Young Innovators Award",
+      displayValue: "3M–CII ",
+      subText: "Confedration of Indian Industry",
+      icon: <Trophy size={40} />,
+      isNumber: false
     },
     {
       id: 3,
